@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = '22'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+application {
+    mainModule = 'fluidsim'  // This should match your module name
+    mainClass = 'com.fluidsim.Main'
+}
