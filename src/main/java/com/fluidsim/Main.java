@@ -1,5 +1,6 @@
 package com.fluidsim;
 
+import com.fluidsim.backend.Grid;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,7 +16,8 @@ public class Main extends Application {
         Group root = new Group();
         Scene scene = new Scene(root, APP_WIDTH, APP_HEIGHT, Color.WHITE);
 
-        CanvasHandler canvasHandler = new CanvasHandler();
+        Grid grid = new Grid();
+        CanvasHandler canvasHandler = new CanvasHandler(grid);
         root.getChildren().add(canvasHandler.getCanvas());
 
         stage.setScene(scene);
