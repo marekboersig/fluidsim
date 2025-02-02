@@ -1,16 +1,27 @@
 package com.fluidsim.backend;
 
 public class Particle {
-    int x_ind;
-    int y_ind;
+    private int x_ind;
+    private int y_ind;
 
-    public boolean updated;
+    private ParticleType type;
 
-    public Particle(int x_ind, int y_ind) {
+    public Particle(int x_ind, int y_ind, ParticleType type) {
         this.x_ind = x_ind;
         this.y_ind = y_ind;
+        this.type = type;
+    }
 
-        updated = true;
+    public ParticleType getType() {
+        return type;
+    }
+
+    public void setX(int x) {
+        this.x_ind = x;
+    }
+
+    public void setY(int y) {
+        this.y_ind = y;
     }
 
     public int getX() {

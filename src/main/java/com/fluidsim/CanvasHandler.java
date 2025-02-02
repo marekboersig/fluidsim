@@ -2,9 +2,13 @@ package com.fluidsim;
 
 import com.fluidsim.backend.Coords;
 import com.fluidsim.backend.Grid;
+import com.fluidsim.backend.Particle;
+import com.fluidsim.backend.ParticleType;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
+import java.util.Iterator;
 
 import static com.fluidsim.Main.APP_WIDTH;
 import static com.fluidsim.Main.APP_HEIGHT;
@@ -23,23 +27,29 @@ public class CanvasHandler {
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, APP_WIDTH, APP_HEIGHT);
+        updateCanvas();
 
         canvas.setOnMouseClicked(event -> {
             double x = event.getX();
             double y = event.getY();
 
-            grid.spawnParticle(Utility.pixelToCoords((int) x, (int) y));
+            grid.spawnParticle(Utility.pixelToCoords((int) x, (int) y), ParticleType.EARTH);
             updateCanvas();
         });
     }
 
     public void updateCanvas() {
-        grid.getParticles().stream().filter(p -> p.updated).forEach(p -> {
+        Iterator<Particle> it = grid.getParticles().iterator();
+
+        while (it.hasNext()) {
+            Particle p = it.next();
             Coords pixel_c = Utility.coordsToPixel(p.getX(), p.getY());
-            gc.setFill(Color.WHITE);
+
+            gc.setFill(p.getType().getColor());
             gc.fillRect(pixel_c.x(), pixel_c.y(), GRID_FACTOR_WIDTH, GRID_FACTOR_HEIGHT);
-            p.updated = false;
-        });
+
+            it.remove();
+        }
     }
 
     public Canvas getCanvas() {
